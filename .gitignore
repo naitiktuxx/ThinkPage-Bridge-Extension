@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Build artifacts
+*.zip
+*.xpi
+web-ext-artifacts/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node (if web-ext is used locally)
+node_modules/
+npm-debug.log*
