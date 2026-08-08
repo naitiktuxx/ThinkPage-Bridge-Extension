@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.3.7] - 2026-08-08
+
+### Fixed
+- Fixed background service worker startup race condition where initial browser startup tab opened ThinkPage even when extension was disabled in storage.
+
 ## [1.3.6] - 2026-08-08
 
 ### Changed

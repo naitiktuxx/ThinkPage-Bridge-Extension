@@ -57,6 +57,30 @@ const browserAPI = (function () {
 
 // ── EXTENSION STATE ────────────────────────────────────────────────
 let isExtensionEnabled = true;
+let isStateLoaded = false;
+let stateLoadPromise = null;
+
+function ensureStateLoaded() {
+    if (isStateLoaded) return Promise.resolve(isExtensionEnabled);
+    if (!stateLoadPromise) {
+        stateLoadPromise = (async () => {
+            if (browserAPI.storage && browserAPI.storage.local) {
+                try {
+                    const data = await browserAPI.storage.local.get("enabled");
+                    if (data && typeof data.enabled === "boolean") {
+                        isExtensionEnabled = data.enabled;
+                    }
+                } catch (e) {}
+            }
+            isStateLoaded = true;
+            return isExtensionEnabled;
+        })();
+    }
+    return stateLoadPromise;
+}
+
+// Start loading persistent state immediately on startup
+ensureStateLoaded();
 
 const TP_MATCHES = [
     "https://thinkpage.vercel.app/*",
@@ -78,7 +102,10 @@ if (browserAPI.tabs) {
             return u === "about:newtab" || u === "about:home";
         };
 
-        const handleNewTab = (tabId, url, tabIndex) => {
+        const handleNewTab = async (tabId, url, tabIndex) => {
+            if (!isStateLoaded) {
+                await ensureStateLoaded();
+            }
             if (!isExtensionEnabled || !tabId || redirectedTabs.has(tabId)) return;
             if (isNewTabUrl(url)) {
                 redirectedTabs.add(tabId);
@@ -157,15 +184,6 @@ function notifyStatusChange(enabled) {
     }
 }
 
-// Load persistent state from storage.local on background startup
-if (browserAPI.storage && browserAPI.storage.local) {
-    browserAPI.storage.local.get("enabled").then((data) => {
-        if (typeof data.enabled === "boolean") {
-            isExtensionEnabled = data.enabled;
-        }
-    }).catch(() => {});
-}
-
 // Listen for storage changes to keep state in sync
 if (browserAPI.storage && browserAPI.storage.onChanged) {
     const storageOnChanged = browserAPI.storage.onChanged.addListener || browserAPI.storage.onChanged;
@@ -174,6 +192,7 @@ if (browserAPI.storage && browserAPI.storage.onChanged) {
             browserAPI.storage.onChanged.addListener((changes, areaName) => {
                 if (areaName === "local" && changes.enabled && typeof changes.enabled.newValue === "boolean") {
                     isExtensionEnabled = changes.enabled.newValue;
+                    isStateLoaded = true;
                     notifyStatusChange(isExtensionEnabled);
                 }
             });
@@ -188,20 +207,22 @@ if (browserAPI.runtime && browserAPI.runtime.onMessage) {
 
         // 1. Get status for GUI popup
         if (message.action === "get_status") {
-            if (!browserAPI.tabs || !browserAPI.tabs.query) {
-                sendResponse({ enabled: isExtensionEnabled, connected: false, connectedCount: 0 });
-                return true;
-            }
-            browserAPI.tabs.query({ url: TP_MATCHES }).then((tabs) => {
-                const count = tabs ? tabs.length : 0;
-                sendResponse({
-                    enabled: isExtensionEnabled,
-                    connected: isExtensionEnabled && count > 0,
-                    connectedCount: count,
-                    activeTabUrl: count > 0 ? tabs[0].url : null
+            ensureStateLoaded().then(() => {
+                if (!browserAPI.tabs || !browserAPI.tabs.query) {
+                    sendResponse({ enabled: isExtensionEnabled, connected: false, connectedCount: 0 });
+                    return;
+                }
+                browserAPI.tabs.query({ url: TP_MATCHES }).then((tabs) => {
+                    const count = tabs ? tabs.length : 0;
+                    sendResponse({
+                        enabled: isExtensionEnabled,
+                        connected: isExtensionEnabled && count > 0,
+                        connectedCount: count,
+                        activeTabUrl: count > 0 ? tabs[0].url : null
+                    });
+                }).catch(() => {
+                    sendResponse({ enabled: isExtensionEnabled, connected: false, connectedCount: 0 });
                 });
-            }).catch(() => {
-                sendResponse({ enabled: isExtensionEnabled, connected: false, connectedCount: 0 });
             });
             return true;
         }
