@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.3.9] - 2026-08-09
+
+### Added
+- Submitted extension for public listing on Mozilla Add-ons (AMO) store (`--channel=listed`).
+
 ## [1.3.8] - 2026-08-09
 
 ### Changed
