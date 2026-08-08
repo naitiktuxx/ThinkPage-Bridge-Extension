@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.4.0] - 2026-08-09
+
+### Fixed
+- Added `amo-metadata.json` with MIT license specification to satisfy Mozilla API requirements for public listed add-on submissions.
+
 ## [1.3.9] - 2026-08-09
 
 ### Added

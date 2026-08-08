@@ -1,0 +1,13 @@
+{
+  "version": {
+    "license": "MIT"
+  },
+  "categories": {
+    "firefox": [
+      "search-tools"
+    ]
+  },
+  "summary": {
+    "en-US": "Bridges ThinkPage new-tab dashboard with Firefox browser history and search input auto-focus."
+  }
+}

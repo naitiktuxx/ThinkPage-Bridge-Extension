@@ -65,14 +65,14 @@ You can download and install the extension directly from the **[GitHub Releases]
 ### **Method 1: Install `.xpi` Add-on (Recommended)**
 
 1. Go to the **[Releases Page](https://github.com/naitiktuxx/ThinkPage-Bridge-Extension/releases)**.
-2. Under **Assets**, download `thinkpage-bridge-v1.3.9.xpi`.
+2. Under **Assets**, download `thinkpage-bridge-v1.4.0.xpi`.
 3. Open Firefox and navigate to `about:addons` (or press `Cmd+Shift+A` / `Ctrl+Shift+A`).
 4. Click the **Gear icon ⚙️** near the top right and select **Install Add-on From File…**.
-5. Select the downloaded `thinkpage-bridge-v1.3.9.xpi` file and click **Add**.
+5. Select the downloaded `thinkpage-bridge-v1.4.0.xpi` file and click **Add**.
 
 ### **Method 2: Install via `.zip` Package**
 
-1. Go to the **[Releases Page](https://github.com/naitiktuxx/ThinkPage-Bridge-Extension/releases)** and download `thinkpage-bridge-v1.3.9.zip`.
+1. Go to the **[Releases Page](https://github.com/naitiktuxx/ThinkPage-Bridge-Extension/releases)** and download `thinkpage-bridge-v1.4.0.zip`.
 2. Extract the `.zip` archive to a folder on your computer.
 3. Open Firefox and navigate to `about:debugging#/runtime/this-firefox`.
 4. Click **Load Temporary Add-on…**.
@@ -88,8 +88,8 @@ You can download and install the extension directly from the **[GitHub Releases]
 Pushing any version tag (`v*`) to GitHub automatically syncs `src/manifest.json`, builds the extension, submits it for public listing on the **Mozilla Add-ons (AMO) Store** (`--channel=listed`), and generates `.zip` / `.xpi` release assets on GitHub Releases:
 
 ```bash
-git tag v1.3.9
-git push origin v1.3.9
+git tag v1.4.0
+git push origin v1.4.0
 ```
 
 #### **Manually on Local Machine**
@@ -101,8 +101,8 @@ npm run build
 Or using zip directly:
 
 ```bash
-cd src && zip -r ../dist/thinkpage-bridge-v1.3.9.zip *
-cd .. && cp dist/thinkpage-bridge-v1.3.9.zip dist/thinkpage-bridge-v1.3.9.xpi
+cd src && zip -r ../dist/thinkpage-bridge-v1.4.0.zip *
+cd .. && cp dist/thinkpage-bridge-v1.4.0.zip dist/thinkpage-bridge-v1.4.0.xpi
 ```
 
 </details>
