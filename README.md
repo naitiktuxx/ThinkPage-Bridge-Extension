@@ -140,7 +140,7 @@ npm run build
 Or using zip directly:
 
 ```bash
-cd src && zip -r ../dist/thinkpage-bridge-v1.3.2.zip * ../LICENSE.md ../README.md
+cd src && zip -r ../dist/thinkpage-bridge-v1.3.2.zip *
 cd .. && cp dist/thinkpage-bridge-v1.3.2.zip dist/thinkpage-bridge-v1.3.2.xpi
 ```
 

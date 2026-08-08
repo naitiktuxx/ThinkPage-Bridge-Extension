@@ -20,7 +20,7 @@ jobs:
         run: |
           mkdir -p build
           TAG_NAME="${GITHUB_REF_NAME:-v1.3.2}"
-          cd src && zip -r "../build/thinkpage-bridge-${TAG_NAME}.zip" * ../LICENSE.md ../README.md
+          cd src && zip -r "../build/thinkpage-bridge-${TAG_NAME}.zip" *
           cd .. && cp "build/thinkpage-bridge-${TAG_NAME}.zip" "build/thinkpage-bridge-${TAG_NAME}.xpi"
 
       - name: Upload Release Assets
