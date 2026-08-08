@@ -1,0 +1,33 @@
+name: Build Firefox Extension Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create Release Zip and XPI
+        run: |
+          mkdir -p build
+          TAG_NAME="${GITHUB_REF_NAME:-v1.3.2}"
+          cd src && zip -r "../build/thinkpage-bridge-${TAG_NAME}.zip" * ../LICENSE.md ../README.md
+          cd .. && cp "build/thinkpage-bridge-${TAG_NAME}.zip" "build/thinkpage-bridge-${TAG_NAME}.xpi"
+
+      - name: Upload Release Assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            build/thinkpage-bridge-*.zip
+            build/thinkpage-bridge-*.xpi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

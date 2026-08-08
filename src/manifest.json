@@ -1,29 +1,43 @@
 {
   "manifest_version": 2,
   "name": "ThinkPage Bridge",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "Minimal bridge to pass browser history and handle focus for ThinkPage.",
   "permissions": [
     "history",
     "tabs",
     "cookies",
+    "storage",
     "https://thinkpage.vercel.app/*",
-    "file://*/*",
+    "file:///*",
     "http://localhost/*",
     "http://127.0.0.1/*"
   ],
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_title": "ThinkPage Bridge",
+    "default_icon": {
+      "16": "icon16.png",
+      "32": "icon32.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
   "background": {
     "scripts": ["background.js"],
     "persistent": false
-  },
-  "chrome_url_overrides": {
-    "newtab": "newtab.html"
   },
   "content_scripts": [
     {
       "matches": [
         "https://thinkpage.vercel.app/*",
-        "file://*/*",
+        "file:///*",
         "http://localhost/*",
         "http://127.0.0.1/*"
       ],
@@ -42,3 +56,5 @@
     }
   }
 }
+
+

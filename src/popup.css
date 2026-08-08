@@ -1,0 +1,372 @@
+/* ── ThinkPage Bridge Popup — tp icon theme ────────────────────────────────
+   Palette pulled straight from the icon:
+     Background  →  deep matte charcoal  #0e0e10
+     Surface     →  slightly lighter     #161618
+     Card        →  subtle glass card    rgba(255,255,255,0.04)
+     Rim border  →  dark steel           rgba(255,255,255,0.10)
+     Silver hi   →  brushed chrome       #d4d4d8  /  #a1a1aa
+     Accent glow →  warm silver halo     rgba(212,212,216,0.15)
+   ──────────────────────────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* ── core surface ─── */
+  --bg:              #0e0e10;
+  --surface:         #161618;
+  --card-bg:         rgba(255, 255, 255, 0.04);
+  --card-border:     rgba(255, 255, 255, 0.09);
+  --card-hover:      rgba(255, 255, 255, 0.14);
+
+  /* ── chrome / silver scale ─── */
+  --chrome-hi:       #e4e4e7;   /* bright specular */
+  --chrome-mid:      #a1a1aa;   /* mid-tone brushed */
+  --chrome-lo:       #52525b;   /* shadow edge */
+  --chrome-glow:     rgba(228, 228, 231, 0.12);
+
+  /* ── text ─── */
+  --text-main:       #f4f4f5;
+  --text-muted:      #71717a;
+
+  /* ── status ─── */
+  --ok:              #a3e635;   /* lime — pops against black */
+  --ok-bg:           rgba(163, 230, 53, 0.10);
+  --ok-border:       rgba(163, 230, 53, 0.22);
+
+  --warn:            #fbbf24;
+  --warn-bg:         rgba(251, 191, 36, 0.10);
+  --warn-border:     rgba(251, 191, 36, 0.22);
+
+  --err:             #f87171;
+  --err-bg:          rgba(248, 113, 113, 0.10);
+  --err-border:      rgba(248, 113, 113, 0.22);
+}
+
+/* ── reset ─────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── body ───────────────────────────────────────────────────────────────── */
+body {
+  width: 320px;
+  background: var(--bg);
+  color: var(--text-main);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  line-height: 1.45;
+  user-select: none;
+  /* subtle inner-glow matching the icon's rim-light */
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+/* ── container ──────────────────────────────────────────────────────────── */
+.popup-container {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   HEADER
+══════════════════════════════════════════════════════════════════════════ */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 4px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Replace the SVG logo with the actual icon image */
+.logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  overflow: hidden;
+  /* subtle chrome rim around the icon thumbnail */
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 4px 14px rgba(0, 0, 0, 0.6);
+  flex-shrink: 0;
+}
+
+.logo img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* Hide the old SVG if it's still inside .logo */
+.logo svg { display: none; }
+
+.brand-text h1 {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  /* brushed-chrome gradient text */
+  background: linear-gradient(160deg, var(--chrome-hi) 30%, var(--chrome-mid) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.brand-text .version {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: var(--chrome-lo);
+  text-transform: uppercase;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   CARDS
+══════════════════════════════════════════════════════════════════════════ */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 13px;
+  padding: 12px 14px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  /* top specular rim — mimics the icon's inner top highlight */
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.card:hover {
+  border-color: var(--card-hover);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Toggle card ─────────────────────────────────────────────────────── */
+.toggle-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--chrome-hi);
+}
+
+.card-subtext {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ── Toggle switch — chrome style ────────────────────────────────────── */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.switch input { opacity: 0; width: 0; height: 0; }
+
+.slider {
+  position: absolute;
+  inset: 0;
+  background: #27272a;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+  transition: 0.25s ease-in-out;
+}
+
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 2px;
+  bottom: 2px;
+  /* chrome knob */
+  background: linear-gradient(160deg, #e4e4e7 0%, #a1a1aa 100%);
+  border-radius: 50%;
+  transition: 0.25s ease-in-out;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.3) inset,
+    0 2px 5px rgba(0,0,0,0.5);
+}
+
+input:checked + .slider {
+  background: #1c1c1e;
+  border-color: rgba(163, 230, 53, 0.35);
+  box-shadow: 0 0 10px rgba(163, 230, 53, 0.15);
+}
+
+input:checked + .slider::before {
+  transform: translateX(20px);
+  background: linear-gradient(160deg, #d4d4d8 0%, #a3e635 100%);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   STATUS CARD
+══════════════════════════════════════════════════════════════════════════ */
+.status-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.status-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.status-header .label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--chrome-lo);
+  font-weight: 600;
+}
+
+/* badge */
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+  background-color: var(--warn-bg);
+  border: 1px solid var(--warn-border);
+  color: var(--warn);
+  transition: all 0.3s ease;
+}
+
+.status-badge .status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* connected */
+.status-badge.connected {
+  background-color: var(--ok-bg);
+  border-color: var(--ok-border);
+  color: var(--ok);
+}
+
+.status-badge.connected .status-dot::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 1px solid var(--ok);
+  animation: pulse-ring 1.8s infinite ease-in-out;
+}
+
+/* disabled */
+.status-badge.disabled {
+  background-color: var(--err-bg);
+  border-color: var(--err-border);
+  color: var(--err);
+}
+
+@keyframes pulse-ring {
+  0%   { transform: scale(0.8); opacity: 0.9; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+/* details table */
+.status-details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.detail-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.detail-label { color: var(--text-muted); }
+
+.detail-value {
+  color: var(--chrome-mid);
+  font-weight: 500;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 11px;
+  letter-spacing: 0.2px;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   FOOTER BUTTON — brushed chrome CTA
+══════════════════════════════════════════════════════════════════════════ */
+.footer { margin-top: 2px; }
+
+.btn {
+  width: 100%;
+  padding: 9px 14px;
+  border-radius: 9px;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  letter-spacing: 0.1px;
+}
+
+/* chrome metallic button */
+.btn-primary {
+  background: linear-gradient(175deg, #3a3a3c 0%, #1c1c1e 100%);
+  color: var(--chrome-hi);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 2px 8px rgba(0, 0, 0, 0.5),
+    0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(175deg, #4a4a4e 0%, #2a2a2e 100%);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 4px 14px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+  box-shadow:
+    inset 0 1px 3px rgba(0, 0, 0, 0.4),
+    0 1px 2px rgba(0, 0, 0, 0.4);
+}

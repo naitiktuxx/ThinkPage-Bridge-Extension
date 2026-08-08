@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ThinkPage Bridge</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="brand">
+        <div class="logo">
+          <img src="icon.png" alt="ThinkPage Bridge icon">
+        </div>
+        <div class="brand-text">
+          <h1>ThinkPage Bridge</h1>
+          <span class="version">v1.3.2</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Master Switch Card -->
+    <div class="card toggle-card">
+      <div class="card-info">
+        <span class="card-title">Bridge Extension</span>
+        <span class="card-subtext" id="toggle-subtext">Active and syncing</span>
+      </div>
+      <label class="switch" title="Toggle ThinkPage Bridge">
+        <input type="checkbox" id="extension-toggle" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <!-- Status Card -->
+    <div class="card status-card">
+      <div class="status-header">
+        <span class="label">Connection Status</span>
+        <div class="status-badge" id="status-badge">
+          <span class="status-dot"></span>
+          <span class="status-text" id="status-text">Checking...</span>
+        </div>
+      </div>
+      <div class="status-details">
+        <div class="detail-row">
+          <span class="detail-label">Active Tabs</span>
+          <span class="detail-value" id="active-tabs-count">0 tabs</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Target Host</span>
+          <span class="detail-value" id="target-host">thinkpage.vercel.app</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Action -->
+    <footer class="footer">
+      <button id="open-thinkpage-btn" class="btn btn-primary">
+        <span>Open ThinkPage</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="7" y1="17" x2="17" y2="7"></line>
+          <polyline points="7 7 17 7 17 17"></polyline>
+        </svg>
+      </button>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
