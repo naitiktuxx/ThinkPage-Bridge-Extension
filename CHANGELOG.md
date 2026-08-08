@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.3.4] - 2026-08-08
+
+### Added
+- Automated public Firefox Add-ons store publishing (`--channel=listed`).
+- Integrated dynamic `manifest.json` version sync with release tags.
+- Full release feature documentation for public store listing.
+
 ## [1.3.2] - 2026-08-08
 
 ### Added

@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "ThinkPage Bridge",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "Minimal bridge to pass browser history and handle focus for ThinkPage.",
   "permissions": [
     "history",
