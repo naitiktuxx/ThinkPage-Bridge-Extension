@@ -7,7 +7,7 @@
 <h3 align="center">ThinkPage Bridge</h3>
 
 <p align="center">
-  Seamlessly bridge your <b><a href="https://github.com/naitiktuxx/ThinkPage">ThinkPage</a></b> new-tab dashboard with Firefox history and auto-focus search.
+  Seamlessly bridge your <b><a href="https://github.com/naitiktuxx/ThinkPage">ThinkPage</a></b> new-tab dashboard with Firefox history and search bar auto-focus.
 </p>
 
 <p align="center">
@@ -18,13 +18,13 @@
 
 ---
 
-## 📁 Repository Structure
+## **Repository Structure**
 
 ```
 ThinkPage-Bridge-Extension/
 ├── src/                    # Extension source code
-│   ├── manifest.json       # Extension manifest (Manifest v2, Firefox / Gecko)
-│   ├── background.js       # Background service worker & new tab focus router
+│   ├── manifest.json       # WebExtension manifest (Manifest v2, Firefox / Gecko)
+│   ├── background.js       # Background service worker & tab router
 │   ├── content.js          # Injected bridge script for ThinkPage origins
 │   ├── newtab.html         # Minimal new-tab container page
 │   ├── newtab.js           # Redirect & native home fallback handler
@@ -39,39 +39,39 @@ ThinkPage-Bridge-Extension/
 
 ---
 
-## Overview
+## **Overview**
 
-**ThinkPage Bridge** is a lightweight Firefox browser extension engineered specifically for **[ThinkPage](https://thinkpage.vercel.app)**. When enabled, it replaces your Firefox new tab with your ThinkPage dashboard, places instant keyboard focus into ThinkPage's search bar, and safely proxies browser history operations without exposing raw browser APIs to web scripts.
+**ThinkPage Bridge** is a lightweight Firefox browser extension engineered specifically for **[ThinkPage](https://thinkpage.vercel.app)**. When enabled, it connects your Firefox browser with your ThinkPage dashboard, places instant keyboard focus into ThinkPage's search input, and safely proxies browser history operations without exposing privileged browser APIs to web scripts.
 
-When paused from the popup menu, the extension **reverts instantly to Firefox's native built-in home page** (`about:home` / `about:newtab`) without altering your browser preferences.
-
----
-
-## ✨ Features
-
-- **🚀 Instant Search Bar Auto-Focus**: Opens new tabs with keyboard cursor pre-focused directly inside ThinkPage's search input (`Search Google or type a URL`).
-- **⚡ In-Place Tab Navigation**: Redirects new tabs dynamically without duplicate tab creation, tab-bar shuffling, or browser flicker.
-- **🔄 Real-Time History Syncing**: Automatically syncs page visits, title updates, and deletions between Firefox and ThinkPage in real-time.
-- **🛡️ Secure History Proxying**: Proxies history operations via scoped `postMessage` window events rather than exposing privileged APIs.
-- **🎛️ Instant Extension Toggle**: Toggle the extension on or off anytime via the clean extension popup menu.
-- **🏠 Native Firefox Revert**: Disabling the toggle instantly reverts new tabs to Firefox's default native homepage (`about:home`).
+When paused from the extension popup, it **reverts instantly to Firefox's native default home page** (`about:home` / `about:newtab`) without altering your browser preferences.
 
 ---
 
-## 📦 Direct Installation (GitHub Releases)
+## **Key Features**
+
+- **Instant Search Bar Auto-Focus**: Pre-focuses keyboard cursor directly inside ThinkPage's search input on new tab load.
+- **In-Place Tab Navigation**: Redirects new tabs dynamically without duplicate tab creation, tab shuffling, or browser flickering.
+- **Real-Time History Synchronization**: Automatically syncs page visits, title updates, and deletions between Firefox and ThinkPage in real-time.
+- **Secure History Proxying**: Proxies history operations via scoped `postMessage` window events rather than exposing privileged APIs.
+- **Instant Extension Toggle**: Toggle the extension on or off anytime via the clean extension popup menu.
+- **Native Firefox Revert**: Disabling the toggle instantly reverts new tabs to Firefox's default native homepage (`about:home`).
+
+---
+
+## **Installation Guide (GitHub Releases)**
 
 You can download and install the extension directly from the **[GitHub Releases](https://github.com/naitiktuxx/ThinkPage-Bridge-Extension/releases)** tab.
 
-### Method 1: Install `.xpi` Add-on (Recommended)
+### **Method 1: Install `.xpi` Add-on (Recommended)**
 
 1. Go to the **[Releases Page](https://github.com/naitiktuxx/ThinkPage-Bridge-Extension/releases)**.
-2. Under **Assets**, download `thinkpage-bridge-v1.3.2.xpi` (or `thinkpage-bridge-v1.3.2.zip`).
+2. Under **Assets**, download `thinkpage-bridge-v1.3.6.xpi` (or `thinkpage-bridge-v1.3.6.zip`).
 3. Open Firefox and type `about:addons` in the address bar (or press `Cmd+Shift+A` / `Ctrl+Shift+A`).
 4. Click the **Gear icon ⚙️** near the top right and select **Install Add-on From File…**.
 5. Select the downloaded `.xpi` (or `.zip`) file.
 6. Click **Add** when prompted by Firefox.
 
-### Method 2: Temporary Add-on (Developer Mode)
+### **Method 2: Temporary Add-on (Developer Mode)**
 
 1. Download or clone this repository:
    ```bash
@@ -83,7 +83,7 @@ You can download and install the extension directly from the **[GitHub Releases]
 
 ---
 
-## 🎮 Extension Popup Interface
+## **Extension Popup Interface**
 
 Click the ThinkPage icon in your Firefox toolbar to access the control panel:
 
@@ -94,11 +94,11 @@ Click the ThinkPage icon in your Firefox toolbar to access the control panel:
 
 ---
 
-## 🛠 Protocol Specifications
+## **Protocol Specifications**
 
 ThinkPage communicates with the extension content script using bidirectional `window.postMessage` events.
 
-### Webpage → Content Script Requests
+### **Webpage → Content Script Requests**
 
 | Event Type | Data Payload | Description |
 |---|---|---|
@@ -107,7 +107,7 @@ ThinkPage communicates with the extension content script using bidirectional `wi
 | `THINKPAGE_DELETE_ALL_HISTORY` | — | Clears browser history |
 | `THINKPAGE_ADD_URL` | `{ url: string, title?: string }` | Adds a visit entry to browser history |
 
-### Content Script → Webpage Responses & Notifications
+### **Content Script → Webpage Responses & Notifications**
 
 | Event Type | Data Payload | Description |
 |---|---|---|
@@ -120,18 +120,18 @@ ThinkPage communicates with the extension content script using bidirectional `wi
 
 ---
 
-## 🏗 Generating Release Packages
+## **Generating Release Packages**
 
-### Option 1: Automatically via GitHub Actions (Recommended)
+### **Option 1: Automatically via GitHub Actions (Recommended)**
 
 Simply push a version tag to GitHub. GitHub Actions will automatically compile `src/`, generate `.zip` and `.xpi` Firefox release packages, and publish them to GitHub Releases under Assets:
 
 ```bash
-git tag v1.3.2
-git push origin v1.3.2
+git tag v1.3.6
+git push origin v1.3.6
 ```
 
-### Option 2: Manually on local machine
+### **Option 2: Manually on local machine**
 
 ```bash
 npm run build
@@ -140,18 +140,18 @@ npm run build
 Or using zip directly:
 
 ```bash
-cd src && zip -r ../dist/thinkpage-bridge-v1.3.2.zip *
-cd .. && cp dist/thinkpage-bridge-v1.3.2.zip dist/thinkpage-bridge-v1.3.2.xpi
+cd src && zip -r ../dist/thinkpage-bridge-v1.3.6.zip *
+cd .. && cp dist/thinkpage-bridge-v1.3.6.zip dist/thinkpage-bridge-v1.3.6.xpi
 ```
 
 ---
 
-## 🔗 Related Projects
+## **Related Projects**
 
 - **[ThinkPage Web App](https://github.com/naitiktuxx/ThinkPage)** — The modern start page dashboard powered by this bridge extension.
 
 ---
 
-## 📄 License
+## **License**
 
 Distributed under the **MIT License**. See [`LICENSE.md`](./LICENSE.md) for details.
