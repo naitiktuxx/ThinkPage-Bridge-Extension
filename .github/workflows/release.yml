@@ -22,10 +22,22 @@ jobs:
         with:
           node-version: 20
 
+      - name: Sync Manifest Version with Release Tag
+        run: |
+          RAW_TAG="${GITHUB_REF_NAME:-v1.3.3}"
+          VERSION_NUM="${RAW_TAG#v}"
+          echo "Updating src/manifest.json version to: ${VERSION_NUM}"
+          node -e "
+            const fs = require('fs');
+            const manifest = JSON.parse(fs.readFileSync('src/manifest.json', 'utf8'));
+            manifest.version = '${VERSION_NUM}';
+            fs.writeFileSync('src/manifest.json', JSON.stringify(manifest, null, 2));
+          "
+
       - name: Package & Sign Extension
         run: |
           mkdir -p build
-          TAG_NAME="${GITHUB_REF_NAME:-v1.3.2}"
+          TAG_NAME="${GITHUB_REF_NAME:-v1.3.3}"
           
           # 1. Package installable zip
           cd src && zip -r "../build/thinkpage-bridge-${TAG_NAME}.zip" * && cd ..
