@@ -44,7 +44,7 @@ jobs:
 
           # 2. Sign with Mozilla API if secrets exist, else fallback to unsigned xpi
           if [ -n "${{ secrets.AMO_JWT_ISSUER }}" ] && [ -n "${{ secrets.AMO_JWT_SECRET }}" ]; then
-            npx web-ext sign --source-dir ./src --api-key="${{ secrets.AMO_JWT_ISSUER }}" --api-secret="${{ secrets.AMO_JWT_SECRET }}" --channel=unlisted --artifacts-dir ./build
+            npx web-ext sign --source-dir ./src --api-key="${{ secrets.AMO_JWT_ISSUER }}" --api-secret="${{ secrets.AMO_JWT_SECRET }}" --channel=listed --artifacts-dir ./build
             mv build/*.xpi "build/thinkpage-bridge-${TAG_NAME}.xpi" || cp "build/thinkpage-bridge-${TAG_NAME}.zip" "build/thinkpage-bridge-${TAG_NAME}.xpi"
           else
             cp "build/thinkpage-bridge-${TAG_NAME}.zip" "build/thinkpage-bridge-${TAG_NAME}.xpi"
