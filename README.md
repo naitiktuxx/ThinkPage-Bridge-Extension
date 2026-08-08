@@ -65,73 +65,34 @@ You can download and install the extension directly from the **[GitHub Releases]
 ### **Method 1: Install `.xpi` Add-on (Recommended)**
 
 1. Go to the **[Releases Page](https://github.com/naitiktuxx/ThinkPage-Bridge-Extension/releases)**.
-2. Under **Assets**, download `thinkpage-bridge-v1.3.6.xpi` (or `thinkpage-bridge-v1.3.6.zip`).
-3. Open Firefox and type `about:addons` in the address bar (or press `Cmd+Shift+A` / `Ctrl+Shift+A`).
+2. Under **Assets**, download `thinkpage-bridge-v1.3.6.xpi`.
+3. Open Firefox and navigate to `about:addons` (or press `Cmd+Shift+A` / `Ctrl+Shift+A`).
 4. Click the **Gear icon ⚙️** near the top right and select **Install Add-on From File…**.
-5. Select the downloaded `.xpi` (or `.zip`) file.
-6. Click **Add** when prompted by Firefox.
+5. Select the downloaded `thinkpage-bridge-v1.3.6.xpi` file and click **Add**.
 
-### **Method 2: Temporary Add-on (Developer Mode)**
+### **Method 2: Install via `.zip` Package**
 
-1. Download or clone this repository:
-   ```bash
-   git clone https://github.com/naitiktuxx/ThinkPage-Bridge-Extension.git
-   ```
-2. Open Firefox and navigate to `about:debugging#/runtime/this-firefox`.
-3. Click **Load Temporary Add-on…**.
-4. Select `src/manifest.json` inside the cloned directory.
+1. Go to the **[Releases Page](https://github.com/naitiktuxx/ThinkPage-Bridge-Extension/releases)** and download `thinkpage-bridge-v1.3.6.zip`.
+2. Extract the `.zip` archive to a folder on your computer.
+3. Open Firefox and navigate to `about:debugging#/runtime/this-firefox`.
+4. Click **Load Temporary Add-on…**.
+5. Select `manifest.json` inside the extracted folder.
 
----
+<details>
+<summary><b>Method 3: Build Release Packages from Source (Developer Mode)</b></summary>
 
-## **Extension Popup Interface**
+<br>
 
-Click the ThinkPage icon in your Firefox toolbar to access the control panel:
+#### **Automatically via GitHub Actions (Recommended)**
 
-- **Bridge Extension Switch**: Toggle connection between ThinkPage and Firefox ON or OFF.
-- **Connection Status Indicator**: Displays live connection status (`Connected`, `Bridge paused`, or `Disabled`).
-- **Active Tabs Counter**: Shows how many ThinkPage tabs are currently active.
-- **Open ThinkPage ↗**: Quick shortcut button to launch ThinkPage in a new tab.
-
----
-
-## **Protocol Specifications**
-
-ThinkPage communicates with the extension content script using bidirectional `window.postMessage` events.
-
-### **Webpage → Content Script Requests**
-
-| Event Type | Data Payload | Description |
-|---|---|---|
-| `THINKPAGE_READY_FOR_HISTORY` | — | Requests initial history dump and triggers search input focus |
-| `THINKPAGE_DELETE_URL` | `{ url: string }` | Deletes a specific URL from browser history |
-| `THINKPAGE_DELETE_ALL_HISTORY` | — | Clears browser history |
-| `THINKPAGE_ADD_URL` | `{ url: string, title?: string }` | Adds a visit entry to browser history |
-
-### **Content Script → Webpage Responses & Notifications**
-
-| Event Type | Data Payload | Description |
-|---|---|---|
-| `THINKPAGE_BRIDGE_STATUS_CHANGED` | `{ enabled: boolean }` | Notifies webpage of extension toggle state changes |
-| `THINKPAGE_BRIDGE_HISTORY` | `{ history: HistoryItem[] }` | Delivers initial history array to ThinkPage |
-| `THINKPAGE_BRIDGE_HISTORY_ADDED` | `{ item: HistoryItem }` | Real-time notification when a new page is visited |
-| `THINKPAGE_BRIDGE_HISTORY_REMOVED` | `{ allHistory: boolean, urls: string[] }` | Real-time notification when history items are deleted |
-| `THINKPAGE_BRIDGE_HISTORY_TITLE_CHANGED` | `{ url: string, title: string }` | Real-time notification when a page title is updated |
-| `THINKPAGE_BRIDGE_FOCUS_SEARCH` | — | Signal to trigger search input focus in the web page DOM |
-
----
-
-## **Generating Release Packages**
-
-### **Option 1: Automatically via GitHub Actions (Recommended)**
-
-Simply push a version tag to GitHub. GitHub Actions will automatically compile `src/`, generate `.zip` and `.xpi` Firefox release packages, and publish them to GitHub Releases under Assets:
+Push a version tag to GitHub to automatically compile `src/`, generate `.zip` and `.xpi` release packages, and publish them under GitHub Releases:
 
 ```bash
 git tag v1.3.6
 git push origin v1.3.6
 ```
 
-### **Option 2: Manually on local machine**
+#### **Manually on Local Machine**
 
 ```bash
 npm run build
@@ -143,6 +104,8 @@ Or using zip directly:
 cd src && zip -r ../dist/thinkpage-bridge-v1.3.6.zip *
 cd .. && cp dist/thinkpage-bridge-v1.3.6.zip dist/thinkpage-bridge-v1.3.6.xpi
 ```
+
+</details>
 
 ---
 
