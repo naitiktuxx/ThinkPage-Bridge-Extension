@@ -37,17 +37,24 @@ jobs:
       - name: Package & Sign Extension
         run: |
           mkdir -p build
-          TAG_NAME="${GITHUB_REF_NAME:-v1.3.3}"
+          TAG_NAME="${GITHUB_REF_NAME:-v1.5.0}"
           
           # 1. Package installable zip
           cd src && zip -r "../build/thinkpage-bridge-${TAG_NAME}.zip" * && cd ..
 
-          # 2. Sign with Mozilla API if secrets exist, else fallback to unsigned xpi
+          # 2. Sign with Mozilla API to produce verified XPI for direct GitHub installation
           if [ -n "${{ secrets.AMO_JWT_ISSUER }}" ] && [ -n "${{ secrets.AMO_JWT_SECRET }}" ]; then
-            npx web-ext sign --source-dir ./src --api-key="${{ secrets.AMO_JWT_ISSUER }}" --api-secret="${{ secrets.AMO_JWT_SECRET }}" --channel=listed --approval-timeout=0 --amo-metadata=./amo-metadata.json --artifacts-dir ./build || cp "build/thinkpage-bridge-${TAG_NAME}.zip" "build/thinkpage-bridge-${TAG_NAME}.xpi"
-            mv build/*.xpi "build/thinkpage-bridge-${TAG_NAME}.xpi" 2>/dev/null || true
+            echo "Signing extension with Mozilla API (unlisted channel) for direct XPI download..."
+            npx web-ext sign --source-dir ./src --api-key="${{ secrets.AMO_JWT_ISSUER }}" --api-secret="${{ secrets.AMO_JWT_SECRET }}" --channel=unlisted --artifacts-dir ./build || cp "build/thinkpage-bridge-${TAG_NAME}.zip" "build/thinkpage-bridge-${TAG_NAME}.xpi"
           else
+            echo "No AMO API credentials found; using zip fallback for xpi..."
             cp "build/thinkpage-bridge-${TAG_NAME}.zip" "build/thinkpage-bridge-${TAG_NAME}.xpi"
+          fi
+
+          # 3. Ensure signed XPI is standardized as thinkpage-bridge-${TAG_NAME}.xpi
+          GENERATED_XPI=$(ls build/*.xpi 2>/dev/null | grep -v "thinkpage-bridge-${TAG_NAME}.xpi" | head -n 1)
+          if [ -n "$GENERATED_XPI" ]; then
+            mv "$GENERATED_XPI" "build/thinkpage-bridge-${TAG_NAME}.xpi"
           fi
 
       - name: Upload Release Assets
