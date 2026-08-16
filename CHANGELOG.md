@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.6.0] - 2026-08-16
+
+### Changed
+- Enforced strict Mozilla Add-ons (AMO) signing pipeline for GitHub releases.
+- Removed fallback to unsigned archives to guarantee that only cryptographically verified `.xpi` add-ons are published.
+- Added automated post-build signature verification step inspecting `META-INF` and `cose.sig` archives.
+- Streamlined release assets to strictly publish verified `.xpi` packages.
+
 ## [1.5.0] - 2026-08-13
 
 ### Changed
