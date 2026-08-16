@@ -1,8 +1,8 @@
 {
   "name": "thinkpage-bridge-extension",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "private": true,
   "scripts": {
-    "build": "mkdir -p dist && cd src && zip -r ../dist/thinkpage-bridge-v1.6.0.zip * && cd .. && cp dist/thinkpage-bridge-v1.6.0.zip dist/thinkpage-bridge-v1.6.0.xpi"
+    "build": "mkdir -p dist && cd src && zip -r ../dist/thinkpage-bridge-v1.6.1.zip * && cd .. && cp dist/thinkpage-bridge-v1.6.1.zip dist/thinkpage-bridge-v1.6.1.xpi"
   }
 }

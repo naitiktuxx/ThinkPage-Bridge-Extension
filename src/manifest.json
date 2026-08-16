@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "ThinkPage Bridge",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "Bridges ThinkPage new-tab dashboard with Firefox browser history and search input auto-focus.",
   "permissions": [
     "history",
