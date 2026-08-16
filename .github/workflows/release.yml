@@ -60,10 +60,12 @@ jobs:
             --timeout=900000 \
             --approval-timeout=0
 
-          # 4. If Mozilla generated an XPI, standardize its filename
+          # 4. If Mozilla generated an XPI, standardize its filename; otherwise provide XPI package from zip
           GENERATED_XPI=$(ls build/*.xpi 2>/dev/null | grep -v "thinkpage-bridge-${TAG_NAME}.xpi" | head -n 1)
           if [ -n "$GENERATED_XPI" ]; then
             mv "$GENERATED_XPI" "build/thinkpage-bridge-${TAG_NAME}.xpi"
+          elif [ ! -f "build/thinkpage-bridge-${TAG_NAME}.xpi" ]; then
+            cp "build/thinkpage-bridge-${TAG_NAME}.zip" "build/thinkpage-bridge-${TAG_NAME}.xpi"
           fi
 
       - name: Upload Release Assets
